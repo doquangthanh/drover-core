@@ -126,6 +126,17 @@ fn hooks_settings_file() -> std::io::Result<PathBuf> {
 }
 
 /// argv of a `claude` pane with `--settings <file>` right after the program; anything else unchanged.
+/// `argv` run the way a terminal runs it: inside the user's login shell (`zsh -l -i -c 'exec claude …'`), so the
+/// shell's startup files set PATH, aliases and variables (oh-my-zsh, nvm…) that programs like Claude Code expect, as
+/// in Herdr or gnome-terminal. `exec` keeps one process: the pane still ends when the program does.
+pub fn in_login_shell(shell: &str, argv: Vec<String>) -> Vec<String> {
+    if shell.is_empty() || argv.is_empty() {
+        return argv;
+    }
+    let line: Vec<String> = argv.iter().map(|a| shlex::try_quote(a).map(|q| q.into_owned()).unwrap_or_else(|_| a.clone())).collect();
+    vec![shell.to_string(), "-l".into(), "-i".into(), "-c".into(), format!("exec {}", line.join(" "))]
+}
+
 pub fn with_subagent_hooks(argv: Vec<String>) -> Vec<String> {
     let is_claude = argv
         .first()
@@ -147,6 +158,22 @@ pub fn with_subagent_hooks(argv: Vec<String>) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn a_command_runs_through_the_login_shell_with_its_words_quoted() {
+        let argv = vec!["claude".into(), "--settings".into(), "/tmp/a b/hooks.json".into(), "fix it's bug".into()];
+        assert_eq!(in_login_shell("/usr/bin/zsh", argv),
+                   ["/usr/bin/zsh", "-l", "-i", "-c", r#"exec claude --settings '/tmp/a b/hooks.json' "fix it's bug""#]);
+        assert_eq!(in_login_shell("", vec!["claude".into()]), ["claude"]);
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn the_shell_hands_each_word_through_unchanged() {
+        let argv = in_login_shell("/bin/sh", vec!["printf".into(), "%s|".into(), "a b".into(), "it's".into(), "$HOME".into()]);
+        let out = std::process::Command::new(&argv[0]).args(&argv[1..]).output().unwrap();
+        assert_eq!(String::from_utf8_lossy(&out.stdout), "a b|it's|$HOME|");
+    }
 
     #[test]
     fn windows_bare_names_only_match_runnable_extensions() {

@@ -11,7 +11,7 @@ use drover_core::pane_session::{PaneMeta, PaneSession};
 use drover_core::status_tracker::now_secs;
 use drover_core::workspace_models::new_id;
 
-use crate::launch::{default_shell, pane_env, resolve_argv, with_subagent_hooks};
+use crate::launch::{default_shell, in_login_shell, pane_env, resolve_argv, with_subagent_hooks};
 use crate::manager::Manager;
 use crate::messages_log::Policy;
 use crate::rpc::{E_BAD_PARAMS, E_GENERAL, E_POLICY, RpcError};
@@ -108,6 +108,9 @@ impl Manager {
         });
         // claude panes report their sub-agents (Task/Agent tool) to the Flow board through per-pane hooks.
         let launch = if hooks { with_subagent_hooks(argv) } else { argv };
+        // Linux / macOS: a command (agent, `npm test`…) runs inside the login shell, like typing it in a terminal.
+        // Windows keeps the direct start (ConPTY + resolve_argv); a plain shell pane is that shell already.
+        let launch = if cfg!(windows) || command.is_empty() { launch } else { in_login_shell(&default_shell(&shell)[0], launch) };
         // May fail: create no space/tab before this succeeds.
         pane.start(&resolve_argv(launch), &pane_env(&pane_id)).map_err(SpawnError::Failed)?;
         let tab_id = match req.tab_id.filter(|t| self.tabs.contains_key(t)) {
