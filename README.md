@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/doquangthanh/drover-core/releases/latest/download/drover.exe"><img alt="Download for Windows" src="https://img.shields.io/badge/Download-Windows%2010%20%2F%2011-76a8ff?style=for-the-badge&logo=windows&logoColor=white&labelColor=1c2147"></a>
+  <a href="https://doquangthanh.github.io/drover-core/#install"><img alt="Download for Windows" src="https://img.shields.io/badge/Download-Windows%2010%20%2F%2011-76a8ff?style=for-the-badge&logo=windows&logoColor=white&labelColor=1c2147"></a>
   &nbsp;
   <a href="#linux"><img alt="Install on Linux" src="https://img.shields.io/badge/Install-Linux-4cc48c?style=for-the-badge&logo=linux&logoColor=white&labelColor=1c2147"></a>
 </p>
@@ -111,7 +111,7 @@ Settings.
 
 ### Windows
 
-1. **[Download Drover](https://github.com/doquangthanh/drover-core/releases/latest/download/drover.exe)** and save it
+1. **[Download Drover](https://doquangthanh.github.io/drover-core/#install)** and save it
    anywhere, such as your Desktop.
 2. **Open it.** Drover starts right away. There is no setup wizard and nothing else to install.
 3. The first time, Windows may say it doesn't recognise the app. Click **More info**, then **Run anyway**.
@@ -126,7 +126,7 @@ Installs the latest release (x64 or arm64) into `~/.local/share/drover`, links `
 `~/.local/bin` and adds Drover to your app menu. No Python or Node needed. The window uses the system WebKitGTK 4.1
 (Debian/Ubuntu: `libwebkit2gtk-4.1-0`, present on most desktops); without it `dr app` opens the UI in your browser.
 Downloads are checked against the release's SHA-256. Run the same command again to update, or use
-**Settings → Check for updates**. Pin a version with `DROVER_VERSION=v0.1.8`.
+**Settings → Check for updates**. Pin a version with `DROVER_VERSION=v0.2.15`.
 
 ### First five minutes
 
