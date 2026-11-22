@@ -289,7 +289,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: 
       <article class="feat"><div class="fi-g">⌥</div><h3>Git worktree per task</h3><p>Each task gets its own worktree. The Changes view shows the diff and lets you commit, push and open a PR.</p></article>
       <article class="feat"><div class="fi-g">✉</div><h3>Chat view for Claude Code</h3><p>Read Claude's work as a conversation with tool cards, approve permissions inline, switch model and how much it may do alone.</p></article>
       <article class="feat"><div class="fi-g">⌂</div><h3>Every machine in one sidebar</h3><p>Add a VPS with <code>dr machine add</code>. Its agents show up next to your local ones through an SSH tunnel.</p></article>
-      <article class="feat"><div class="fi-g">▦</div><h3>Splits, search, files</h3><p>tmux-style panes and keys, search across every agent's output, a file tree and code editor built in.</p></article>
+      <article class="feat"><div class="fi-g">▦</div><h3>Splits, search, files</h3><p>Split panes with VS Code keys, search across every agent's output, a file tree and code editor built in.</p></article>
       <article class="feat"><div class="fi-g">☐</div><h3>Works on your phone</h3><p>The same UI has a phone layout with a key strip for Esc, Tab, arrows and Ctrl+C. Open it over Tailscale.</p></article>
       <article class="feat"><div class="fi-g">≡</div><h3>Plain-file config</h3><p>Settings, keys, machines and detection rules are TOML files you can edit inside the app. Updates install from Settings.</p></article>
     </div>
@@ -360,7 +360,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: 
   <div class="wrap">
     <div class="head"><div class="eyebrow">Guide</div><h2>From install to a working herd in five steps.</h2></div>
     <div class="steps">
-      <div class="step"><div class="num">1</div><div><h3>Start an agent</h3><p>Press <kbd>+</kbd> in the tab bar or <kbd>Ctrl+A</kbd> <kbd>c</kbd>. Pick the agent, the folder, an optional worktree and a first prompt.</p></div>
+      <div class="step"><div class="num">1</div><div><h3>Start an agent</h3><p>Press <kbd>+</kbd> in the tab bar or <kbd>Ctrl+Shift+`</kbd>. Pick the agent, the folder, an optional worktree and a first prompt.</p></div>
         <div class="demo"><span class="p">agent </span><span class="fg">claude</span>
 <span class="p">folder</span> <span class="fg">~/code/api</span>
 <span class="p">tree  </span> <span class="fg">task/auth-refactor</span>
@@ -369,7 +369,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: 
         <div class="demo"><span class="p">$ </span><span class="fg">dr status</span>
 server  <span class="ok">running</span>  127.0.0.1:47213
 agents  4  <span class="s-working">●</span> 2 working  <span class="warn">●</span> 1 needs you</div></div>
-      <div class="step"><div class="num">3</div><div><h3>Answer whoever needs you</h3><p>Drover reads each screen and marks it working, needs you, done or idle. <kbd>Ctrl+A</kbd> <kbd>n</kbd> jumps straight to the next agent waiting on you.</p></div>
+      <div class="step"><div class="num">3</div><div><h3>Answer whoever needs you</h3><p>Drover reads each screen and marks it working, needs you, done or idle. <kbd>F8</kbd> jumps straight to the next agent waiting on you.</p></div>
         <div class="demo"><span class="warn">● codex · flaky-tests</span>
   Allow <span class="fg">npm test -- --runInBand</span>?
   <span class="fg">[y]</span> yes  <span class="fg">[a]</span> always  <span class="fg">[n]</span> no</div></div>
@@ -388,15 +388,15 @@ tunnel 127.0.0.1:47213 → vps-1 <span class="ok">connected</span></div></div>
 
 <section class="block" id="reference">
   <div class="wrap">
-    <div class="head"><div class="eyebrow">Reference</div><h2>Keys and commands.</h2><p>The prefix is <kbd>Ctrl+A</kbd>, tmux style. Press it twice to send a real Ctrl+A to the agent.</p></div>
+    <div class="head"><div class="eyebrow">Reference</div><h2>Keys and commands.</h2><p>VS Code's default keys, and they reach Drover even inside a terminal. <kbd>Ctrl+K</kbd> <kbd>W</kbd> means press Ctrl+K, let go, then W.</p></div>
     <div class="ref">
       <div class="card"><h3>Keyboard</h3><table>
-        <tr><td><kbd>Ctrl+A</kbd> <kbd>c</kbd></td><td>New agent</td></tr>
-        <tr><td><kbd>Ctrl+A</kbd> <kbd>n</kbd></td><td>Next agent that needs you</td></tr>
-        <tr><td><kbd>Ctrl+A</kbd> <kbd>/</kbd></td><td>Find any agent or text</td></tr>
-        <tr><td><kbd>Ctrl+A</kbd> <kbd>%</kbd> <kbd>"</kbd></td><td>Split side by side / stacked</td></tr>
-        <tr><td><kbd>Ctrl+A</kbd> <kbd>z</kbd> <kbd>x</kbd></td><td>Zoom / close pane</td></tr>
-        <tr><td><kbd>Ctrl+A</kbd> <kbd>:</kbd> <kbd>?</kbd></td><td>All commands / all shortcuts</td></tr>
+        <tr><td><kbd>Ctrl+Shift+`</kbd> <kbd>Ctrl+N</kbd></td><td>New terminal / new tab</td></tr>
+        <tr><td><kbd>F8</kbd> <kbd>Shift+F8</kbd></td><td>Next agent that needs you / is done</td></tr>
+        <tr><td><kbd>Ctrl+P</kbd></td><td>Jump to a terminal</td></tr>
+        <tr><td><kbd>Ctrl+\</kbd> <kbd>Ctrl+K</kbd> <kbd>Ctrl+\</kbd></td><td>Split side by side / stacked</td></tr>
+        <tr><td><kbd>Ctrl+K</kbd> <kbd>Ctrl+M</kbd> · <kbd>Ctrl+K</kbd> <kbd>W</kbd></td><td>Zoom / close pane</td></tr>
+        <tr><td><kbd>Ctrl+Shift+P</kbd> · <kbd>Ctrl+K</kbd> <kbd>Ctrl+S</kbd></td><td>All commands / all shortcuts</td></tr>
       </table></div>
       <div class="card"><h3>CLI</h3><table>
         <tr><td><code>dr run [--bg] -- claude</code></td><td>Start an agent</td></tr>
