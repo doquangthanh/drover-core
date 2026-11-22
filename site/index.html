@@ -234,7 +234,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: 
 <header class="hero" id="top">
   <canvas id="herd" aria-hidden="true"></canvas>
   <div class="wrap">
-    <div class="eyebrow">v0.1.7 · Windows · Linux · macOS</div>
+    <div class="eyebrow"><span id="ver">v0.2.15</span> · Windows · Linux · macOS</div>
     <h1 style="margin-top:18px">Keep the whole herd <em>moving.</em></h1>
     <p class="lede">Drover runs Claude Code, Codex, Gemini, opencode and any shell side by side. They keep working when you close the window, and Drover tells you which one needs you.</p>
     <div class="cta"><a class="btn primary" id="hero-cta" href="#install">Install Drover</a><a class="btn" href="#guide">Read the guide</a></div>
@@ -289,7 +289,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: 
       <article class="feat"><div class="fi-g">⌥</div><h3>Git worktree per task</h3><p>Each task gets its own worktree. The Changes view shows the diff and lets you commit, push and open a PR.</p></article>
       <article class="feat"><div class="fi-g">✉</div><h3>Chat view for Claude Code</h3><p>Read Claude's work as a conversation with tool cards, approve permissions inline, switch model and how much it may do alone.</p></article>
       <article class="feat"><div class="fi-g">⌂</div><h3>Every machine in one sidebar</h3><p>Add a VPS with <code>dr machine add</code>. Its agents show up next to your local ones through an SSH tunnel.</p></article>
-      <article class="feat"><div class="fi-g">▦</div><h3>Splits, search, files</h3><p>tmux-style panes and keys, search across every agent's output, a file tree and code editor built in.</p></article>
+      <article class="feat"><div class="fi-g">▦</div><h3>Splits, search, files</h3><p>Split panes with VS Code keys, search across every agent's output, a file tree and code editor built in.</p></article>
       <article class="feat"><div class="fi-g">☐</div><h3>Works on your phone</h3><p>The same UI has a phone layout with a key strip for Esc, Tab, arrows and Ctrl+C. Open it over Tailscale.</p></article>
       <article class="feat"><div class="fi-g">≡</div><h3>Plain-file config</h3><p>Settings, keys, machines and detection rules are TOML files you can edit inside the app. Updates install from Settings.</p></article>
     </div>
@@ -310,7 +310,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: 
 <span class="p">$ </span>curl -fsSL https://raw.githubusercontent.com/doquangthanh/drover-core/main/scripts/install.sh | sh
 
 <span class="c"># pin a version</span>
-<span class="p">$ </span>DROVER_VERSION=v0.1.5 sh install.sh
+<span class="p">$ </span>DROVER_VERSION=v0.2.15 sh install.sh
 
 <span class="c"># open the window</span>
 <span class="p">$ </span>drover</pre></div>
@@ -323,19 +323,19 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: 
     <div class="panel" data-panel="win" hidden>
       <div class="dl">
         <div class="dl-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.5 4.5v7H3zM11.5 4.3 21 3v8.5h-9.5zM3 12.5h7.5v7L3 18.5zM11.5 12.5H21V21l-9.5-1.3z"/></svg></div>
-        <div class="dl-txt"><strong>Drover for Windows</strong><span>Windows 10 and 11 · free · about 30 MB</span></div>
-        <a class="btn primary" href="https://github.com/doquangthanh/drover-core/releases/latest/download/drover.exe" target="_blank" rel="noopener">Download</a>
+        <div class="dl-txt"><strong>Drover for Windows</strong><span>Windows 10 and 11 · free · about 5 MB, the rest downloads on first run</span></div>
+        <a class="btn primary" data-dl href="https://github.com/doquangthanh/drover-core/releases/latest" target="_blank" rel="noopener">Download</a>
       </div>
       <ol class="run">
         <li><b>Download</b> Drover and save it anywhere you like, such as your Desktop.</li>
-        <li><b>Open it.</b> Drover starts right away. There is no setup wizard and nothing else to install.</li>
+        <li><b>Open it.</b> The first time, it fetches the rest of Drover (about 40 MB), then starts. There is no setup wizard.</li>
         <li>The first time, Windows may say it doesn't recognise the app. Click <b>More info</b>, then <b>Run anyway</b>.</li>
       </ol>
       <dl class="notes">
         <div><dt>You need</dt><dd style="margin:0">A Windows 10 or 11 PC and the AI coding tools your team already uses, such as Claude Code or Codex.</dd></div>
         <div><dt>Keeps working</dt><dd style="margin:0">Close the window and your agents carry on. Open Drover again to see where they are.</dd></div>
         <div><dt>Stays private</dt><dd style="margin:0">Drover runs on your own computer. Your code and settings stay on it.</dd></div>
-        <div><dt>Updates</dt><dd style="margin:0">Download again to get the newest version. Your settings are kept.</dd></div>
+        <div><dt>Updates</dt><dd style="margin:0">Settings → Check for updates, or download again. Your settings are kept.</dd></div>
       </dl>
     </div>
     <div class="panel" data-panel="src" hidden>
@@ -360,7 +360,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: 
   <div class="wrap">
     <div class="head"><div class="eyebrow">Guide</div><h2>From install to a working herd in five steps.</h2></div>
     <div class="steps">
-      <div class="step"><div class="num">1</div><div><h3>Start an agent</h3><p>Press <kbd>+</kbd> in the tab bar or <kbd>Ctrl+A</kbd> <kbd>c</kbd>. Pick the agent, the folder, an optional worktree and a first prompt.</p></div>
+      <div class="step"><div class="num">1</div><div><h3>Start an agent</h3><p>Press <kbd>+</kbd> in the tab bar or <kbd>Ctrl+Shift+`</kbd>. Pick the agent, the folder, an optional worktree and a first prompt.</p></div>
         <div class="demo"><span class="p">agent </span><span class="fg">claude</span>
 <span class="p">folder</span> <span class="fg">~/code/api</span>
 <span class="p">tree  </span> <span class="fg">task/auth-refactor</span>
@@ -369,7 +369,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: 
         <div class="demo"><span class="p">$ </span><span class="fg">dr status</span>
 server  <span class="ok">running</span>  127.0.0.1:47213
 agents  4  <span class="s-working">●</span> 2 working  <span class="warn">●</span> 1 needs you</div></div>
-      <div class="step"><div class="num">3</div><div><h3>Answer whoever needs you</h3><p>Drover reads each screen and marks it working, needs you, done or idle. <kbd>Ctrl+A</kbd> <kbd>n</kbd> jumps straight to the next agent waiting on you.</p></div>
+      <div class="step"><div class="num">3</div><div><h3>Answer whoever needs you</h3><p>Drover reads each screen and marks it working, needs you, done or idle. <kbd>F8</kbd> jumps straight to the next agent waiting on you.</p></div>
         <div class="demo"><span class="warn">● codex · flaky-tests</span>
   Allow <span class="fg">npm test -- --runInBand</span>?
   <span class="fg">[y]</span> yes  <span class="fg">[a]</span> always  <span class="fg">[n]</span> no</div></div>
@@ -388,15 +388,15 @@ tunnel 127.0.0.1:47213 → vps-1 <span class="ok">connected</span></div></div>
 
 <section class="block" id="reference">
   <div class="wrap">
-    <div class="head"><div class="eyebrow">Reference</div><h2>Keys and commands.</h2><p>The prefix is <kbd>Ctrl+A</kbd>, tmux style. Press it twice to send a real Ctrl+A to the agent.</p></div>
+    <div class="head"><div class="eyebrow">Reference</div><h2>Keys and commands.</h2><p>VS Code's default keys, and they reach Drover even inside a terminal. <kbd>Ctrl+K</kbd> <kbd>W</kbd> means press Ctrl+K, let go, then W.</p></div>
     <div class="ref">
       <div class="card"><h3>Keyboard</h3><table>
-        <tr><td><kbd>Ctrl+A</kbd> <kbd>c</kbd></td><td>New agent</td></tr>
-        <tr><td><kbd>Ctrl+A</kbd> <kbd>n</kbd></td><td>Next agent that needs you</td></tr>
-        <tr><td><kbd>Ctrl+A</kbd> <kbd>/</kbd></td><td>Find any agent or text</td></tr>
-        <tr><td><kbd>Ctrl+A</kbd> <kbd>%</kbd> <kbd>"</kbd></td><td>Split side by side / stacked</td></tr>
-        <tr><td><kbd>Ctrl+A</kbd> <kbd>z</kbd> <kbd>x</kbd></td><td>Zoom / close pane</td></tr>
-        <tr><td><kbd>Ctrl+A</kbd> <kbd>:</kbd> <kbd>?</kbd></td><td>All commands / all shortcuts</td></tr>
+        <tr><td><kbd>Ctrl+Shift+`</kbd> <kbd>Ctrl+N</kbd></td><td>New terminal / new tab</td></tr>
+        <tr><td><kbd>F8</kbd> <kbd>Shift+F8</kbd></td><td>Next agent that needs you / is done</td></tr>
+        <tr><td><kbd>Ctrl+P</kbd></td><td>Jump to a terminal</td></tr>
+        <tr><td><kbd>Ctrl+\</kbd> <kbd>Ctrl+K</kbd> <kbd>Ctrl+\</kbd></td><td>Split side by side / stacked</td></tr>
+        <tr><td><kbd>Ctrl+K</kbd> <kbd>Ctrl+M</kbd> · <kbd>Ctrl+K</kbd> <kbd>W</kbd></td><td>Zoom / close pane</td></tr>
+        <tr><td><kbd>Ctrl+Shift+P</kbd> · <kbd>Ctrl+K</kbd> <kbd>Ctrl+S</kbd></td><td>All commands / all shortcuts</td></tr>
       </table></div>
       <div class="card"><h3>CLI</h3><table>
         <tr><td><code>dr run [--bg] -- claude</code></td><td>Start an agent</td></tr>
@@ -434,9 +434,22 @@ tunnel 127.0.0.1:47213 → vps-1 <span class="ok">connected</span></div></div>
     document.getElementById('t-win').click();
     const cta = document.getElementById('hero-cta');
     cta.textContent = 'Download';
-    cta.href = 'https://github.com/doquangthanh/drover-core/releases/latest/download/drover.exe';
+    cta.dataset.dl = '';
+    cta.href = 'https://github.com/doquangthanh/drover-core/releases/latest';
     cta.target = '_blank'; cta.rel = 'noopener';
   }
+  // Point the download buttons at the newest release that already has drover.exe. A new tag is marked latest
+  // before assemble-bundle attaches the bundle, so releases/latest/download/drover.exe can 404 for a while.
+  fetch('https://api.github.com/repos/doquangthanh/drover-core/releases?per_page=10')
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(list => {
+      const rel = list.find(r => !r.draft && !r.prerelease && r.assets.some(a => a.name === 'drover.exe'));
+      if (!rel) return;
+      const exe = rel.assets.find(a => a.name === 'drover.exe').browser_download_url;
+      document.querySelectorAll('[data-dl]').forEach(a => a.href = exe);
+      document.getElementById('ver').textContent = rel.tag_name;
+    })
+    .catch(() => {});  // offline or rate-limited: the buttons keep the releases page link
   document.querySelector('.tabs').prepend(document.getElementById('t-win'));
 
   /* ---------- tilted window follows the pointer, flattens on scroll ---------- */
