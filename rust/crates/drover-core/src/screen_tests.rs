@@ -82,3 +82,15 @@ fn utf8_wide_chars_read_back_cleanly() {
     s.feed("tiếng Việt 日本語 🎉".as_bytes());
     assert_eq!(s.visible_lines()[0], "tiếng Việt 日本語 🎉");
 }
+
+#[test]
+fn osc52_copy_is_kept_once_for_a_viewer() {
+    let mut s = PaneScreen::new(20, 4, 100);
+    // "héllo" base64-encoded, as Claude Code sends its mouse selection; BEL or ST both end it.
+    s.feed(b"\x1b]52;c;aMOpbGxv\x07");
+    assert_eq!(s.take_copied().as_deref(), Some("héllo"));
+    assert_eq!(s.take_copied(), None);
+    // A clipboard read request (`?`) is never answered or stored.
+    s.feed(b"\x1b]52;c;?\x1b\\");
+    assert_eq!(s.take_copied(), None);
+}
