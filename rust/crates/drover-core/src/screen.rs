@@ -11,11 +11,13 @@ use alacritty_terminal::term::cell::Flags;
 use alacritty_terminal::term::{Config, Term, TermMode};
 use alacritty_terminal::vte::ansi::Processor;
 
-/// Collects what the emulator reports back: the window title. Terminal query replies (`PtyWrite`) are dropped,
-/// like the Python daemon did: an attached xterm.js answers them.
+/// Collects what the emulator reports back: the window title, and text a program copied with OSC 52 (Claude Code
+/// copies its own mouse selection that way; alacritty's default accepts copy only, never clipboard reads). Terminal
+/// query replies (`PtyWrite`) are dropped, like the Python daemon did: an attached xterm.js answers them.
 #[derive(Clone, Default)]
 pub struct ScreenEvents {
     title: Arc<Mutex<String>>,
+    copied: Arc<Mutex<Option<String>>>,
 }
 
 impl EventListener for ScreenEvents {
@@ -23,6 +25,7 @@ impl EventListener for ScreenEvents {
         match event {
             Event::Title(t) => *self.title.lock().unwrap() = t,
             Event::ResetTitle => self.title.lock().unwrap().clear(),
+            Event::ClipboardStore(_, text) => *self.copied.lock().unwrap() = Some(text),
             _ => {}
         }
     }
@@ -77,6 +80,11 @@ impl PaneScreen {
 
     pub fn title(&self) -> String {
         self.events.title.lock().unwrap().clone()
+    }
+
+    /// The last text a program copied (OSC 52) since the previous call; a viewer puts it on its clipboard.
+    pub fn take_copied(&self) -> Option<String> {
+        self.events.copied.lock().unwrap().take()
     }
 
     fn row_text(&self, y: i32) -> String {
