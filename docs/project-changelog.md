@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.2.17
+Windows fixes for the native window, and a one-line install. drover-web and drover-desktop are tagged v0.2.17 too.
+### Added
+- Windows: install from PowerShell with `irm https://raw.githubusercontent.com/doquangthanh/drover-core/main/scripts/install.ps1 | iex`.
+  No admin rights, and no "Windows protected your PC" warning: a file fetched this way is not marked as downloaded
+  from the internet. Pin a version with `$env:DROVER_VERSION = "v0.2.17"`. The browser download still works.
+### Fixed
+- Windows: opening Drover no longer opens an extra console window next to it. `drover-native.exe` was built as a
+  console program.
+- Windows: the native window starts on a PC without the Microsoft Visual C++ Redistributable. `drover-native.exe` needed
+  `VCRUNTIME140.dll` and could not find the copy inside the release folder; it now carries the C runtime itself.
+- Website: the Download button points to the newest release that has `drover.exe`. Between tagging a release and
+  attaching its bundle, `releases/latest/download/drover.exe` returned 404. The page also shows the VS Code keys the
+  app uses instead of the old Ctrl+A prefix.
+
 ## Unreleased
 ### Fixed
 - After a computer or daemon restart, the previous panes start again on their own (agents with their resume command,
