@@ -31,6 +31,15 @@ pub fn urgency(state: &str) -> u8 {
     }
 }
 
+/// `local` plus `machines[].snapshot[key]` (port of the React store's `mergeAll`); unreadable entries are skipped.
+fn merged<T: serde::de::DeserializeOwned>(mut local: Vec<T>, machines: &Value, key: &str) -> Vec<T> {
+    for m in machines.as_array().into_iter().flatten() {
+        let remote = m["snapshot"][key].as_array().into_iter().flatten();
+        local.extend(remote.filter_map(|v| serde_json::from_value(v.clone()).ok()));
+    }
+    local
+}
+
 impl Store {
     /// Apply one daemon event. Returns true when anything visible changed.
     pub fn apply(&mut self, name: &str, data: &Value) -> bool {
@@ -43,9 +52,10 @@ impl Store {
                         return false;
                     }
                 };
-                self.spaces = snap.spaces;
-                self.tabs = snap.tabs;
-                self.panes = snap.panes;
+                // Local objects first, then every connected machine's (ids already `alias:`-prefixed by the daemon).
+                self.spaces = merged(snap.spaces, &snap.machines, "spaces");
+                self.tabs = merged(snap.tabs, &snap.machines, "tabs");
+                self.panes = merged(snap.panes, &snap.machines, "panes");
                 self.orchestration = snap.orchestration;
                 self.machines = snap.machines;
                 self.policy_pending = snap.policy_pending;
