@@ -22,7 +22,10 @@ fn ensure_cmd() -> String {
 
 fn ssh_options(m: &Machine, port_flag: &str) -> Vec<String> {
     let mut a: Vec<String> = ["-o", "BatchMode=yes", "-o", "ConnectTimeout=15", "-o", "ServerAliveInterval=20"].map(String::from).into();
-    a.extend([port_flag.to_string(), m.port.to_string()]);
+    // Port 22 is "not set": the command line would override a `Port` the user wrote in ~/.ssh/config.
+    if m.port != 22 {
+        a.extend([port_flag.to_string(), m.port.to_string()]);
+    }
     if !m.key.is_empty() {
         a.extend(["-i".into(), m.key.clone()]);
     }
@@ -147,6 +150,9 @@ mod tests {
         m.known_hosts = false;
         let a = ssh_options(&m, "-p").join(" ");
         assert!(a.contains("BatchMode=yes") && a.contains("-p 2222") && a.contains("-i /k") && a.contains("StrictHostKeyChecking=no"));
+        // The default port is left to OpenSSH (and its config); only another port is passed.
+        let plain = ssh_options(&Machine::new("lab", "bob@lab"), "-p").join(" ");
+        assert!(!plain.contains("-p "));
         assert!(check_target(&Machine::new("x", "-oProxyCommand=evil")).is_err());
     }
 }
