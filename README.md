@@ -117,8 +117,8 @@ Paste into PowerShell (no admin rights, no "Windows protected your PC" warning):
 irm https://raw.githubusercontent.com/doquangthanh/drover-core/main/scripts/install.ps1 | iex
 ```
 
-It downloads `drover.exe` and opens it. The first start fetches the rest of Drover (about 40 MB), installs it and
-adds Drover to the Start menu. Nothing else to install. Pin a version with `$env:DROVER_VERSION = "v0.2.17"`.
+It downloads the latest release (about 40 MB, checked against its SHA-256) into `%LOCALAPPDATA%\drover\app`, adds
+Drover to the Start menu and opens it. Nothing else to install. Run it again to update. Pin a version with `$env:DROVER_VERSION = "v0.2.17"`.
 
 Or **[download Drover](https://doquangthanh.github.io/drover-core/#install)** in your browser and open it. Windows
 may then say it doesn't recognise the app: click **More info**, then **Run anyway**.
