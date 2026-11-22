@@ -111,10 +111,17 @@ Settings.
 
 ### Windows
 
-1. **[Download Drover](https://doquangthanh.github.io/drover-core/#install)** and save it
-   anywhere, such as your Desktop.
-2. **Open it.** Drover starts right away. There is no setup wizard and nothing else to install.
-3. The first time, Windows may say it doesn't recognise the app. Click **More info**, then **Run anyway**.
+Paste into PowerShell (no admin rights, no "Windows protected your PC" warning):
+
+```powershell
+irm https://raw.githubusercontent.com/doquangthanh/drover-core/main/scripts/install.ps1 | iex
+```
+
+It downloads `drover.exe` and opens it. The first start fetches the rest of Drover (about 40 MB), installs it and
+adds Drover to the Start menu. Nothing else to install. Pin a version with `$env:DROVER_VERSION = "v0.2.17"`.
+
+Or **[download Drover](https://doquangthanh.github.io/drover-core/#install)** in your browser and open it. Windows
+may then say it doesn't recognise the app: click **More info**, then **Run anyway**.
 
 ### Linux
 
