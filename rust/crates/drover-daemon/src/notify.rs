@@ -6,6 +6,14 @@ use serde_json::Value;
 
 use crate::settings::Settings;
 
+/// How a kind of agent is called in messages and menus ("claude" -> "Claude Code"); unknown kinds as they are.
+pub fn agent_label(kind: &str) -> &str {
+    match kind {
+        "claude" => "Claude Code", "codex" => "Codex", "gemini" => "Gemini", "opencode" => "OpenCode", "copilot" => "Copilot", "shell" => "Shell",
+        other => other,
+    }
+}
+
 /// Title and body for a state change: what happened, then what the agent was doing.
 pub fn build_message(name: &str, kind: &str, state: &str, detail: &str) -> Option<(String, String)> {
     let (title, hint) = match state {
@@ -14,10 +22,7 @@ pub fn build_message(name: &str, kind: &str, state: &str, detail: &str) -> Optio
         "exited" => (format!("{name} stopped"), "The {agent} process has ended."),
         _ => return None,
     };
-    let agent = match kind {
-        "claude" => "Claude Code", "codex" => "Codex", "gemini" => "Gemini", "opencode" => "opencode", "shell" => "Shell",
-        "" => "The agent", other => other,
-    };
+    let agent = if kind.is_empty() { "The agent" } else { agent_label(kind) };
     let mut body = hint.replace("{agent}", agent);
     let detail: String = detail.split_whitespace().collect::<Vec<_>>().join(" ").chars().take(140).collect();
     if !detail.is_empty() {

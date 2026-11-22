@@ -65,6 +65,25 @@ fn zoomed_tab_shows_only_its_focused_pane() {
 }
 
 #[test]
+fn state_event_merges_machine_snapshots_after_local_objects() {
+    let mut snap = snapshot();
+    snap["machines"] = json!([
+        {"alias": "box", "status": "connected", "snapshot": {
+            "spaces": [{"id": "box:s1", "name": "api", "machine": "box"}],
+            "tabs": [{"id": "box:t1", "space_id": "box:s1", "name": "main"}],
+            "panes": [{"id": "box:%1", "name": "claude", "kind": "claude", "space_id": "box:s1", "tab_id": "box:t1", "state": "blocked", "machine": "box"}]}},
+        {"alias": "off", "status": "retrying", "snapshot": {}}
+    ]);
+    let mut s = Store::default();
+    s.apply("state", &snap);
+    assert_eq!(s.spaces.iter().map(|x| x.id.as_str()).collect::<Vec<_>>(), ["s1", "box:s1"]);
+    assert_eq!(s.spaces[1].machine.as_deref(), Some("box"));
+    assert!(s.tab("box:t1").is_some());
+    assert_eq!(s.pane("box:%1").map(|p| p.machine.as_str()), Some("box"));
+    assert_eq!(s.space_state("box:s1"), "blocked");
+}
+
+#[test]
 fn state_event_keeps_policy_machines_and_orchestration_and_messages_bump_a_tick() {
     let mut s = Store::default();
     let mut snap = snapshot();
