@@ -151,7 +151,7 @@ section.block { padding-block: 100px; border-top: 1px solid var(--line) }
 .notes dt, .notes .lab { font: 500 12px var(--f-mono); color: var(--dim); text-transform: uppercase; letter-spacing: .08em; padding-top: 3px }
 
 .panel[data-panel="win"] { grid-template-columns: 1.3fr 1fr; }
-.panel[data-panel="win"] .dl, .panel[data-panel="win"] .run { grid-column: 1 }
+.panel[data-panel="win"] .code, .panel[data-panel="win"] .dl, .panel[data-panel="win"] .run { grid-column: 1 }
 .panel[data-panel="win"] .notes { grid-column: 2; grid-row: 1 / span 2 }
 .dl { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; padding: 22px 24px; border-radius: 14px; background: var(--pane); border: 1px solid var(--line); box-shadow: 0 0 60px var(--glow) }
 .dl-ico { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 12px; background: var(--card); color: var(--accent) }
@@ -321,6 +321,9 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: 
       </dl>
     </div>
     <div class="panel" data-panel="win" hidden>
+      <div class="code"><button class="copy" data-copy="irm https://raw.githubusercontent.com/doquangthanh/drover-core/main/scripts/install.ps1 | iex">copy</button>
+<pre><span class="c"># recommended: paste into PowerShell. No "Windows protected your PC" warning</span>
+<span class="p">PS> </span>irm https://raw.githubusercontent.com/doquangthanh/drover-core/main/scripts/install.ps1 | iex</pre></div>
       <div class="dl">
         <div class="dl-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.5 4.5v7H3zM11.5 4.3 21 3v8.5h-9.5zM3 12.5h7.5v7L3 18.5zM11.5 12.5H21V21l-9.5-1.3z"/></svg></div>
         <div class="dl-txt"><strong>Drover for Windows</strong><span>Windows 10 and 11 · free · about 5 MB, the rest downloads on first run</span></div>
@@ -329,7 +332,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: 
       <ol class="run">
         <li><b>Download</b> Drover and save it anywhere you like, such as your Desktop.</li>
         <li><b>Open it.</b> The first time, it fetches the rest of Drover (about 40 MB), then starts. There is no setup wizard.</li>
-        <li>The first time, Windows may say it doesn't recognise the app. Click <b>More info</b>, then <b>Run anyway</b>.</li>
+        <li>Downloaded in a browser, Windows may say it doesn't recognise the app. Click <b>More info</b>, then <b>Run anyway</b>, or use the PowerShell command above, which skips this.</li>
       </ol>
       <dl class="notes">
         <div><dt>You need</dt><dd style="margin:0">A Windows 10 or 11 PC and the AI coding tools your team already uses, such as Claude Code or Codex.</dd></div>
@@ -437,6 +440,11 @@ tunnel 127.0.0.1:47213 → vps-1 <span class="ok">connected</span></div></div>
     cta.dataset.dl = '';
     cta.href = 'https://github.com/doquangthanh/drover-core/releases/latest';
     cta.target = '_blank'; cta.rel = 'noopener';
+    // and show the PowerShell one-liner instead of the Linux one
+    const ps = 'irm https://raw.githubusercontent.com/doquangthanh/drover-core/main/scripts/install.ps1 | iex';
+    const one = document.querySelector('.oneliner');
+    one.querySelector('code').innerHTML = '<b>PS&gt;</b> ' + ps;
+    one.querySelector('.copy').dataset.copy = ps;
   }
   // Point the download buttons at the newest release that already has drover.exe. A new tag is marked latest
   // before assemble-bundle attaches the bundle, so releases/latest/download/drover.exe can 404 for a while.
