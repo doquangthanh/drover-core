@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.18
+drover-web and drover-desktop are tagged v0.2.18 too.
+### Fixed
+- Windows: a `drover.exe` downloaded in a browser installs on a new PC. Its first run fetched the bundle of release
+  v0.1.5, which has none, and stopped with "Drover could not install itself … curl: (22) … 404". It now fetches the
+  bundle of its own version. PCs that already had Drover were not affected.
+- Windows: the PowerShell install (`irm …/install.ps1 | iex`) installs the release bundle itself, checks its SHA-256,
+  and can be run again to update.
+
 ## 0.2.17
 Windows fixes for the native window, and a one-line install. drover-web and drover-desktop are tagged v0.2.17 too.
 ### Added
