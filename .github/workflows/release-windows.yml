@@ -17,6 +17,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
+      - name: "pyproject.toml must already hold the tag's version (drover-web and drover-desktop build core from git)"
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: bash
+        run: grep -q "^version = \"${GITHUB_REF_NAME#v}\"" pyproject.toml || { echo "set version in pyproject.toml to ${GITHUB_REF_NAME#v} before tagging" >&2; exit 1; }
       - name: Stamp version from tag
         if: startsWith(github.ref, 'refs/tags/v')
         shell: bash

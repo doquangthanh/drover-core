@@ -303,7 +303,7 @@ daemon, CLI and TUI work and `/` answers 503. For UI work see the drover-web REA
 | Rust daemon | `scripts/cargo-capped.sh build --release -p drover-cli` (in `rust/`) |
 | Rust tests | `scripts/cargo-capped.sh test -p drover-daemon` · Python suite on the Rust daemon: `DROVER_TEST_DAEMON_BIN=rust/target/release/dr uv run pytest` |
 
-Releasing `vX`: tag drover-core (CI builds `drover-core-<os>-<arch>`: Rust `dr` + Python `dr-py`); then point drover-web and
+Releasing `vX`: set `version` in `pyproject.toml` (and `src/drover/__init__.py`, `uv.lock`) to X and tag drover-core (CI builds `drover-core-<os>-<arch>`: Rust `dr` + Python `dr-py`); then point drover-web and
 drover-desktop at that core tag and tag them `vX` (they publish the web archive, the Tauri window and `drover-native`); then run
 the `assemble-bundle` workflow here with `vX`. It joins the pieces into `drover-<os>-<arch>` (and `drover.exe`) that the
 installer and the updater download.
