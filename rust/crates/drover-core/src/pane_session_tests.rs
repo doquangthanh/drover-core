@@ -104,3 +104,16 @@ fn attach_replays_raw_output_until_it_is_trimmed_then_a_snapshot() {
     fresh.feed(got.as_bytes());
     assert_eq!(fresh.all_lines(), p.state.lock().unwrap().screen.all_lines());
 }
+
+#[test]
+fn injected_output_reaches_viewers_and_the_replay() {
+    let p = pane("%9");
+    let (tx, rx) = mpsc::channel::<String>();
+    let tx = Mutex::new(tx);
+    p.attach(|_| {}, move |_, data| { let _ = tx.lock().unwrap().send(data.to_string()); });
+    p.inject_output("\x1b_Gf=100,a=T;AAAA\x1b\\");
+    assert_eq!(rx.recv_timeout(Duration::from_secs(2)).unwrap(), "\x1b_Gf=100,a=T;AAAA\x1b\\");
+    let mut replay = String::new();
+    p.attach(|r| replay.push_str(r), |_, _| {});
+    assert!(replay.contains("\x1b_Gf=100,a=T;AAAA\x1b\\"));
+}

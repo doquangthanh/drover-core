@@ -298,6 +298,7 @@ checksum = "75b325c5dbd37f80359721ad39aca5a29fb04c89279657cffdda8736d0c0b9d2"
 name = "drover-cli"
 version = "0.2.2"
 dependencies = [
+ "base64 0.23.1",
  "dirs",
  "drover-daemon",
  "serde_json",

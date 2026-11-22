@@ -74,6 +74,11 @@ impl PaneSession {
         *self.on_exit.lock().unwrap() = Some(Box::new(hook));
     }
 
+    /// Output that did not come from the program in the pane (e.g. `dr show`): shown to viewers and kept in the replay.
+    pub fn inject_output(&self, data: &str) {
+        self.on_output(data);
+    }
+
     fn on_output(&self, data: &str) {
         // Hot path: hand text to viewers first so typing feels instant.
         let id = self.id();

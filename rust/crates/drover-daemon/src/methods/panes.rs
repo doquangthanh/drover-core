@@ -29,6 +29,7 @@ pub fn methods() -> Vec<MethodSpec> {
         method!("pane.send", "Type text into an agent (as `dr send`)", "pane, text, enter?, caller?", pane_send),
         method!("policy.decide", "Allow or deny an agent's answer to a prompt (user only)", "id, allow", policy_decide),
         method!("pane.resize", "Resize the pseudo-terminal", "pane, cols, rows", pane_resize),
+        method!("pane.show", "Show a PNG in a pane (Kitty graphics, bypasses the terminal)", "pane, png (base64)", pane_show),
         method!("pane.read", "Plain text of a pane (scrollback + screen)", "pane, lines?", pane_read),
         method!("pane.wait", "Block until a pane reaches a state", "pane, states?, timeout?", pane_wait),
         method!("pane.close", "Stop a pane and remove it from its tab", "pane, subtree?", pane_close),
@@ -304,4 +305,49 @@ async fn pane_focus(ctx: Arc<Ctx>, p: Value) -> RpcResult {
 
 async fn pane_list(ctx: Arc<Ctx>, _p: Value) -> RpcResult {
     Ok(json!(ctx.manager.lock().unwrap().panes.values().map(|p| p.to_json()).collect::<Vec<_>>()))
+}
+
+/// Largest PNG `pane.show` takes (base64 characters).
+const SHOW_LIMIT: usize = 8 * 1024 * 1024;
+
+/// Put a PNG in a pane as Kitty graphics. The daemon writes it into the pane's output itself, so it reaches viewers
+/// even where the OS terminal layer (Windows ConPTY) would drop the escape sequence.
+async fn pane_show(ctx: Arc<Ctx>, p: Value) -> RpcResult {
+    let png = opt_str(&p, "png");
+    if !png.starts_with("iVBORw0KGgo") || png.len() > SHOW_LIMIT || !png.bytes().all(|b| b.is_ascii_alphanumeric() || matches!(b, b'+' | b'/' | b'=')) {
+        return Err(bad("png must be base64 PNG data of at most 6 MB"));
+    }
+    let (pane_id, pane) = {
+        let m = ctx.manager.lock().unwrap();
+        let id = pane_param(&m, &p, "pane")?;
+        (id.clone(), m.get(&id)?)
+    };
+    pane.inject_output(&kitty_png(&png));
+    Ok(json!({"pane": pane_id}))
+}
+
+/// `ESC _G f=100,a=T,q=2 ; <base64> ESC \` in chunks of 4096, on its own line (q=2: the viewer sends no reply).
+fn kitty_png(b64: &str) -> String {
+    let chunks: Vec<&str> = b64.as_bytes().chunks(4096).map(|c| std::str::from_utf8(c).unwrap_or("")).collect();
+    let mut out = String::from("\r");
+    for (i, c) in chunks.iter().enumerate() {
+        let more = u8::from(i + 1 < chunks.len());
+        let head = if i == 0 { format!("f=100,a=T,q=2,m={more}") } else { format!("q=2,m={more}") };
+        out.push_str(&format!("\x1b_G{head};{c}\x1b\\"));
+    }
+    out.push_str("\r\n");
+    out
+}
+
+#[cfg(test)]
+mod show_tests {
+    use super::kitty_png;
+
+    #[test]
+    fn splits_into_chunks_and_marks_the_last() {
+        let s = kitty_png(&"A".repeat(4096 + 10));
+        assert_eq!(s.matches("\x1b_G").count(), 2);
+        assert!(s.contains("f=100,a=T,q=2,m=1;") && s.contains("q=2,m=0;AAAAAAAAAA\x1b\\"));
+        assert!(s.starts_with('\r') && s.ends_with("\r\n"));
+    }
 }
