@@ -15,6 +15,7 @@ default = ["server"]
 server = ["dep:drover-daemon"]
 
 [dependencies]
+base64 = "0.23.1"
 drover-daemon = { version = "0.2.2", path = "../drover-daemon", optional = true }
 # float_roundtrip: exact float parsing, so `created_at` prints back with Python's digits (default parser is lossy)
 serde_json = { version = "1.0.154", features = ["preserve_order", "float_roundtrip"] }

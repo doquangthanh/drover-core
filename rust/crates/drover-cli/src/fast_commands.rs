@@ -73,6 +73,7 @@ pub fn run(cmd: FastCommand) -> Outcome {
             rpc("pane.wait_output", params, rpc_timeout(timeout))
                 .and_then(|r| if json { Ok(dumps(&r)) } else { field(&r, "matched_line") })
         }
+        FastCommand::Show { path, target } => show(&path, &target),
         FastCommand::Rename { target, name } => {
             rpc("pane.rename", json!({"pane": target, "name": name}), DEFAULT_RPC_TIMEOUT)
                 .and_then(|r| Ok(format!("{} is now '{}'", field(&r, "pane")?, field(&r, "name")?)))
@@ -143,4 +144,22 @@ fn wait_children(mode: &str, timeout: Timeout) -> Result<String, Failure> {
         lines.push(format!("  {} {} {label}", ljust(&field(c, "name")?, 16), ljust(&field(c, "pane")?, 6)));
     }
     Ok(lines.join("\n"))
+}
+
+/// `dr show <png> [pane]`: send the image to the daemon, which draws it in the pane (works where escape sequences
+/// from a program cannot get through, like the Windows console).
+fn show(path: &str, target: &str) -> Result<String, Failure> {
+    use base64::Engine;
+    const MAX: u64 = 6 * 1024 * 1024;
+    let fail = |m: String| Failure::Lost(m);
+    let meta = std::fs::metadata(path).map_err(|e| fail(format!("cannot read {path}: {e}")))?;
+    if meta.len() > MAX {
+        return Err(fail(format!("{path} is larger than 6 MB")));
+    }
+    let bytes = std::fs::read(path).map_err(|e| fail(format!("cannot read {path}: {e}")))?;
+    if !bytes.starts_with(b"\x89PNG\r\n\x1a\n") {
+        return Err(fail(format!("{path} is not a PNG (only PNG is supported)")));
+    }
+    let png = base64::engine::general_purpose::STANDARD.encode(bytes);
+    rpc("pane.show", json!({"pane": target, "png": png}), DEFAULT_RPC_TIMEOUT).map(|r| format!("shown in {}", r["pane"].as_str().unwrap_or(target)))
 }

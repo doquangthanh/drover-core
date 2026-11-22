@@ -32,6 +32,7 @@ pub enum FastCommand {
     Keys { target: String, keys: Vec<String> },
     WaitOutput { target: String, pattern: String, regex: bool, lines: i64, timeout: Timeout, json: bool },
     Rename { target: String, name: String },
+    Show { path: String, target: String },
     Kill { target: String, tree: bool },
     Run(crate::fast_run_command::RunArgs),
     HookClaude,
@@ -178,6 +179,14 @@ pub fn parse_fast(args: &[String]) -> Option<FastCommand> {
             let lines = p.last("--lines").map(int).unwrap_or(Some(80))?;
             FastCommand::WaitOutput { target, pattern, regex: p.on("--regex"), lines, timeout: timeout(&p)?, json: p.on("--json") }
         }
+        "show" => {
+            let p = parse(rest, &[], &[])?;
+            match p.positionals.as_slice() {
+                [path] => FastCommand::Show { path: path.clone(), target: "self".into() },
+                [path, target] => FastCommand::Show { path: path.clone(), target: target.clone() },
+                _ => return None,
+            }
+        }
         "rename" => {
             let p = parse(rest, &[], &[])?;
             let [target, name] = exactly(&p)?;
@@ -215,6 +224,8 @@ mod tests {
                                               states: vec!["done".into(), "idle".into()], timeout: Timeout::Default }));
         assert_eq!(fast(&["keys", "w", "esc", "ctrl+c"]), Some(FastCommand::Keys { target: "w".into(), keys: vec!["esc".into(), "ctrl+c".into()] }));
         assert_eq!(fast(&["hook", "claude"]), Some(FastCommand::HookClaude));
+        assert_eq!(fast(&["show", "a.png"]), Some(FastCommand::Show { path: "a.png".into(), target: "self".into() }));
+        assert_eq!(fast(&["show", "a.png", "w"]), Some(FastCommand::Show { path: "a.png".into(), target: "w".into() }));
     }
 
     #[test]
