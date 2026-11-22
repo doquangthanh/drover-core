@@ -29,7 +29,20 @@ pub fn methods() -> Vec<MethodSpec> {
         method!("update.apply", "Download a release, replace this install and restart the daemon", "tag", update_apply),
         method!("skill.text", "Instructions that teach an agent to use dr", "", skill_text),
         method!("notify.test", "Send a test desktop notification", "", notify_test),
+        method!("agent.kinds", "Agents from [agents] in settings, and whether each is installed here", "", agent_kinds),
     ]
+}
+
+/// `[agents]` in settings order: kind, label, command, and whether its program is on PATH of this machine.
+async fn agent_kinds(ctx: Arc<Ctx>, _p: Value) -> RpcResult {
+    let agents = ctx.settings.lock().unwrap().value("agents");
+    let list: Vec<Value> = agents.as_object().into_iter().flatten().map(|(kind, a)| {
+        let command = a["command"].as_str().unwrap_or(kind).to_string();
+        let program = drover_core::launch_command::split_command(&command).and_then(|argv| argv.into_iter().next()).unwrap_or_default();
+        let installed = !program.is_empty() && crate::launch::which(&program).is_some();
+        json!({"kind": kind, "label": crate::notify::agent_label(kind), "command": command, "installed": installed})
+    }).collect();
+    Ok(json!(list))
 }
 
 async fn server_info(ctx: Arc<Ctx>, _p: Value) -> RpcResult {
