@@ -3,6 +3,7 @@ resolver = "3"
 members = ["crates/*"]
 
 [workspace.package]
+# Crate metadata only. The release version lives in pyproject.toml (read by drover-daemon/build.rs).
 version = "0.2.2"
 edition = "2024"
 license = "Apache-2.0"

@@ -23,6 +23,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
+      - name: "pyproject.toml must already hold the tag's version (same guard as Windows; stops a half release)"
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: grep -q "^version = \"${GITHUB_REF_NAME#v}\"" pyproject.toml || { echo "set version in pyproject.toml to ${GITHUB_REF_NAME#v} before tagging" >&2; exit 1; }
       - name: System libraries for the Tauri window (WebKitGTK 4.1) and the native GPUI window (preview)
         run: |
           sudo apt-get update
@@ -43,8 +46,6 @@ jobs:
       - name: Build the Rust dr (fast CLI + daemon)
         run: cargo build --release --locked -p drover-cli
         working-directory: rust
-        env:
-          DROVER_RELEASE: "1"  # same as Windows: a drover started outside the bundle may install it (launcher.rs)
       - name: Assemble bundle
         run: |
           install -m 755 rust/target/release/dr dist/drover/dr  # Rust fast CLI + daemon; the Python CLI is dr-py
@@ -60,6 +61,8 @@ jobs:
           dist/drover/dr status
           grep -q '"engine": *"rust"' <(curl -fsS -H "Authorization: Bearer $(jq -r .token "$DROVER_STATE_DIR/daemon.json")" \
             -d '{"method":"server.info","params":{}}' "http://127.0.0.1:$(jq -r .port "$DROVER_STATE_DIR/daemon.json")/rpc")
+          curl -sS -o /dev/null "http://127.0.0.1:$(jq -r .port "$DROVER_STATE_DIR/daemon.json")/health"  # the web UI is added by assemble-bundle.yml
+          dist/drover/dr ls
           dist/drover/dr server stop
       - name: Package
         run: |
