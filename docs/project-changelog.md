@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.19
+drover-web and drover-desktop are tagged v0.2.19 too.
+### Changed
+- Linux: the native window hides the system title bar and shows minimize / maximize / close after `Changes`, as on
+  Windows. The empty part of the tab bar moves the window (double click maximizes) and thin edges resize it.
+### Fixed
+- Windows: a daemon started in a console (`dr server run`) also saves and stops on Ctrl+Break, closing the console and
+  shutdown. Before, only Ctrl+C did.
+- Release: the Linux workflow fails early when `pyproject.toml` does not hold the tag's version, as the Windows one
+  already did. A wrong tag no longer leaves a half release. Its smoke test also checks `/health` and `dr ls`.
+
 ## 0.2.18
 drover-web and drover-desktop are tagged v0.2.18 too.
 ### Fixed
