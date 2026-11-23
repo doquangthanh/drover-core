@@ -244,7 +244,11 @@ async fn stop_on_signal(ctx: Arc<Ctx>) {
         let (Ok(mut term), Ok(mut int)) = (signal(SignalKind::terminate()), signal(SignalKind::interrupt())) else { return };
         tokio::select! { _ = term.recv() => {}, _ = int.recv() => {} }
     }
-    #[cfg(not(unix))]
-    let _ = tokio::signal::ctrl_c().await;
+    #[cfg(windows)]
+    {
+        use tokio::signal::windows::{ctrl_break, ctrl_c, ctrl_close, ctrl_shutdown};
+        let (Ok(mut c), Ok(mut b), Ok(mut close), Ok(mut shutdown)) = (ctrl_c(), ctrl_break(), ctrl_close(), ctrl_shutdown()) else { return };
+        tokio::select! { _ = c.recv() => {}, _ = b.recv() => {}, _ = close.recv() => {}, _ = shutdown.recv() => {} }
+    }
     ctx.request_stop();
 }
