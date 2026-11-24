@@ -74,8 +74,12 @@ pub async fn with_status(repo: &Repo, comments: Vec<store::Comment>) -> Vec<(sto
 
 /// A file path from a client: relative, no `..`, nothing that leaves the working tree (also through a symlink).
 pub fn safe_rel(root: &str, file: &str) -> Result<String, String> {
-    let p = Path::new(file);
-    let plain = !file.is_empty() && !file.contains('\0') && !file.starts_with('-')
+    // Clients on any OS send these: read `\` as a separator and refuse drive paths here too (on Linux "C:/x" and
+    // "a\..\x" would otherwise look like plain names).
+    let slashed = file.replace('\\', "/");
+    let p = Path::new(&slashed);
+    let drive = file.as_bytes().get(1) == Some(&b':');
+    let plain = !file.is_empty() && !file.contains('\0') && !file.starts_with('-') && !drive
         && p.components().all(|c| matches!(c, Component::Normal(_) | Component::CurDir));
     if !plain || p.components().next().is_some_and(|c| c.as_os_str() == ".git") {
         return Err(format!("file must be a path inside the folder: {file}"));
