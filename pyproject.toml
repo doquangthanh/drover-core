@@ -1,6 +1,6 @@
 [project]
 name = "drover"
-version = "0.2.20"
+version = "0.2.21"
 description = "Personal workspace for running coding agents: persistent sessions, status detection, multi-machine"
 readme = "README.md"
 requires-python = ">=3.12"
