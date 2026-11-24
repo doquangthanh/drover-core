@@ -36,8 +36,12 @@ jobs:
         run: cargo build --workspace --locked
         working-directory: rust
       - name: Tests (core + daemon)
-        timeout-minutes: 10 # a hung test fails the job (and keeps its log) instead of running for hours
-        run: cargo test --locked -p drover-core -p drover-daemon
+        timeout-minutes: 12
+        shell: bash
+        # A hung test fails the step with its name in the log (coreutils timeout on Linux) instead of running on.
+        run: |
+          T=""; [ "$RUNNER_OS" = Linux ] && T="timeout -k 10 480"
+          $T cargo test --locked -p drover-core -p drover-daemon -- --test-threads=1
         working-directory: rust
 
   # The look of both clients comes from design/tokens.json; this job only validates the source (both targets are
