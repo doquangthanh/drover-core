@@ -263,6 +263,16 @@ Config lives in `%LOCALAPPDATA%\drover` on Windows and `~/.config/drover` on Lin
 `keys.toml`, `machines.toml`, `rules/*.toml`, plus an `AGENTS.md` that explains them so an agent can change Drover for
 you. Logs and session state sit next to it (`~/.local/state/drover` on Linux).
 
+Post-run checks: put `.drover/checks.toml` in a repo (or folder) and the Changes view can run it on request
+(`check.run`, never automatically):
+
+```toml
+[[step]]
+name = "test"
+run = ["cargo", "test"]   # argv list; a string runs through the shell
+timeout_s = 600           # optional, default 600
+```
+
 - The server binds 127.0.0.1 on a random port with a random token stored in an owner-only file.
 - Any program running inside a Drover pane can control all panes through `dr`.
 - An agent cannot answer another agent's permission prompt unless you allow it
