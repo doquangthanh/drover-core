@@ -19,7 +19,9 @@ Drover has two UIs: the **web UI** (`drover-web`, React; it is also what the Tau
 4. Commit the three generated files with the change to `tokens.json`.
 
 Never edit a `*.generated.*` / `theme_data.rs` file by hand. `node design/gen-tokens.mjs --check` fails when one is stale
-(run it in CI with `--require` so a missing sibling checkout is an error, not a skip).
+(run it in CI with `--require` so a missing sibling checkout is an error, not a skip, and `--only web|desktop` so each
+repo checks only its own files). A change to `tokens.json` lands on drover-core `main` first; then regenerate in the
+other two repos, or their CI fails.
 
 ## Build a new UI feature
 
@@ -36,7 +38,7 @@ The rule: **a feature is not finished until `design/features.json` says where it
 
 | Check | Command | Fails when |
 |-------|---------|------------|
-| Generated colours are current | `node design/gen-tokens.mjs --check --require` | a generated file differs from `tokens.json` |
+| Generated colours are current | CI of drover-web / drover-desktop: checks out drover-core `main`, runs `gen-tokens.mjs --check --require --only web\|desktop` | a generated file differs from `tokens.json` |
 | Web test | `npm test` in `drover-web/frontend` (`tokens-parity.test.ts`) | generated file stale, or a theme has no terminal or editor palette |
 | Native test | `cargo test -p drover-desktop-native` (`theme.rs`) | a generated theme cannot be selected, ids repeat |
 | Feature table | `node design/check-parity.mjs` | a feature has no status for one client |

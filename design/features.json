@@ -16,8 +16,9 @@
     {
       "id": "layout-constants",
       "title": "Sidebar width, top bar and status bar heights come from tokens.json",
-      "web": "done",
-      "native": "done"
+      "web": "planned",
+      "native": "done",
+      "note": "web still has the numbers in its CSS (sidebar.css); the generator writes no layout values for web yet"
     },
     {
       "id": "custom-keys",

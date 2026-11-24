@@ -39,8 +39,9 @@ jobs:
         run: cargo test --locked -p drover-core -p drover-daemon
         working-directory: rust
 
-  # The look of both clients comes from design/tokens.json; this job guards the source itself. The generated files in
-  # drover-web and drover-desktop are checked there (see design/README.md: gen-tokens.mjs --check --require).
+  # The look of both clients comes from design/tokens.json; this job only validates the source (both targets are
+  # skipped here). drover-web and drover-desktop check their own generated files against this repo's main branch in
+  # their CI: gen-tokens.mjs --check --require --only web|desktop.
   design:
     runs-on: ubuntu-22.04
     steps:
