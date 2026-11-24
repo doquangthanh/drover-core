@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.20
+The web UI and the native window look and work alike. drover-web and drover-desktop are tagged v0.2.20 too.
+### Added
+- `design/tokens.json` holds the colours of both windows. `design/gen-tokens.mjs` generates each window's theme files
+  from it, and the CI of drover-web and drover-desktop fails when they differ. `design/features.json` lists every UI
+  feature and where it stands in each window (`node design/check-parity.mjs --strict` prints the gaps).
+- Web: tabs in the code editor, git change marks in its gutter, the agent beside the code (Ctrl+J), send the selection
+  to an agent (Alt+S), quickfix list from post-run checks, and a review loop in the Changes view.
+- Native: the themes come from `tokens.json` (terminal cursor and selection colours too), a ranked command palette with
+  hints, a banner when an agent is done, and Ctrl+Click on a file path to open it.
+### Fixed
+- Ctrl+Click on paths printed by Git Bash (`/c/Users/...`) and on UNC paths (`\\server\share`) opens the file instead
+  of saying "Outside this space".
+
 ## 0.2.19
 drover-web and drover-desktop are tagged v0.2.19 too.
 ### Changed
