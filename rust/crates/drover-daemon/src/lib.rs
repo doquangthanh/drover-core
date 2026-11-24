@@ -1,6 +1,7 @@
 //! Drover daemon: owns the panes, serves the UI, `/ws` and `/rpc`. Port of `drover/daemon`.
 
 pub mod chat;
+pub mod checks;
 pub mod claude_session;
 pub mod codex_session;
 pub mod ctx;
@@ -20,6 +21,7 @@ pub mod parent_notes;
 pub mod paths;
 pub mod persistence;
 pub mod remote;
+pub mod review;
 pub mod rpc;
 pub mod self_update;
 pub mod self_update_apply;
@@ -101,7 +103,7 @@ pub fn build_context(token: String) -> Arc<Ctx> {
         rule_errors: Mutex::new(rule_errors), token, port: AtomicU16::new(0), started_at: now_secs(),
         clients: Mutex::new(Default::default()), pending_answers: Mutex::new(Default::default()),
         stop: Notify::new(), stopping: AtomicBool::new(false), restart: AtomicBool::new(false),
-        input_locks: Default::default(), read_locks: Default::default(),
+        input_locks: Default::default(), read_locks: Default::default(), checks: Default::default(),
     })
 }
 
