@@ -36,6 +36,7 @@ jobs:
         run: cargo build --workspace --locked
         working-directory: rust
       - name: Tests (core + daemon)
+        timeout-minutes: 10 # a hung test fails the job (and keeps its log) instead of running for hours
         run: cargo test --locked -p drover-core -p drover-daemon
         working-directory: rust
 
