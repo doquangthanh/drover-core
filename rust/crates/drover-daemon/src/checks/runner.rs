@@ -55,19 +55,26 @@ fn build_command(step: &Step, cwd: &str) -> tokio::process::Command {
 /// Kill the program and everything it started (a shell step's children would otherwise keep running).
 async fn kill_tree(pid: Option<u32>) {
     let Some(pid) = pid else { return };
-    let mut cmd = if cfg!(windows) {
-        let mut c = tokio::process::Command::new("taskkill");
-        c.args(["/T", "/F", "/PID", &pid.to_string()]);
-        c
-    } else {
-        let mut c = tokio::process::Command::new("kill");
-        c.args(["-KILL", &format!("-{pid}")]);
-        c
-    };
-    cmd.stdin(Stdio::null()).stdout(Stdio::null()).stderr(Stdio::null());
+    #[cfg(unix)]
+    {
+        // The step runs in a process group of its own (process_group(0)): kill that group directly, and only when
+        // it really is its own. `kill -KILL -<pid>` through the kill program took the daemon's group with it on
+        // Linux (procps reads "-<pid>" without "--" its own way).
+        let pid = pid as libc::pid_t;
+        // SAFETY: plain syscalls on a pid we started; getpgid guards against signalling any other group.
+        unsafe {
+            if pid > 1 && libc::getpgid(pid) == pid && libc::getpgid(0) != pid {
+                libc::killpg(pid, libc::SIGKILL);
+            }
+        }
+    }
     #[cfg(windows)]
-    cmd.creation_flags(0x0800_0000);
-    let _ = cmd.status().await;
+    {
+        let mut cmd = tokio::process::Command::new("taskkill");
+        cmd.args(["/T", "/F", "/PID", &pid.to_string()]).stdin(Stdio::null()).stdout(Stdio::null()).stderr(Stdio::null());
+        cmd.creation_flags(0x0800_0000);
+        let _ = cmd.status().await;
+    }
 }
 
 fn pump<R: tokio::io::AsyncRead + Unpin + Send + 'static>(mut r: R, buf: Arc<Mutex<Vec<u8>>>) -> tokio::task::JoinHandle<()> {
