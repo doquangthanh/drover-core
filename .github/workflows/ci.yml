@@ -38,3 +38,17 @@ jobs:
       - name: Tests (core + daemon)
         run: cargo test --locked -p drover-core -p drover-daemon
         working-directory: rust
+
+  # The look of both clients comes from design/tokens.json; this job guards the source itself. The generated files in
+  # drover-web and drover-desktop are checked there (see design/README.md: gen-tokens.mjs --check --require).
+  design:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: tokens.json is valid
+        run: node design/gen-tokens.mjs --check --web ./none --desktop ./none
+      - name: Every UI feature states where it stands in both clients
+        run: node design/check-parity.mjs

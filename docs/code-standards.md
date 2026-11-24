@@ -26,3 +26,8 @@ the protocol they depend on: change `/ws`, `/rpc` or `drover-proto` only with a 
   `process_cwd`, `self_update_apply::swap`, PTY/ConPTY): never a feature switched off with `cfg!(windows)` or
   `sys.platform`. Allowed differences: OS APIs and config values (paths, `.exe`, PATH separator, fonts).
 - `ci.yml` builds the whole Rust workspace and runs its tests on Linux and Windows for every push: keep it green.
+
+## One look for both windows
+- Colours and sizes of the web UI and the native window come from `design/tokens.json` (generated into drover-web and
+  drover-desktop; never edit a generated file). Which UI features each window has is `design/features.json`: a feature
+  is not finished until it states where it stands in both. How, step by step: `design/README.md`.

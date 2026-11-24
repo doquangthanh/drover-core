@@ -1,0 +1,112 @@
+{
+  "$comment": "Every user-visible UI feature and where it stands in each client. web = drover-web (browser and Tauri window), native = drover-desktop (GPUI). Status: done | planned | n/a (n/a needs a reason). Add a line here in the same change that adds the feature to one client; `node design/check-parity.mjs` fails on a missing or invalid status, and --strict lists what one client still lacks.",
+  "features": [
+    {
+      "id": "themes",
+      "title": "Nine themes from tokens.json, chosen in Settings",
+      "web": "done",
+      "native": "done"
+    },
+    {
+      "id": "terminal-colours",
+      "title": "Terminal colours follow the theme",
+      "web": "done",
+      "native": "done"
+    },
+    {
+      "id": "layout-constants",
+      "title": "Sidebar width, top bar and status bar heights come from tokens.json",
+      "web": "done",
+      "native": "done"
+    },
+    {
+      "id": "custom-keys",
+      "title": "Your own shortcuts in keys.toml",
+      "web": "done",
+      "native": "done",
+      "note": "[web_keys] and [desktop_keys]: separate tables, same idea"
+    },
+    {
+      "id": "palette-search",
+      "title": "Palette: ranked and fuzzy search, matched letters highlighted",
+      "web": "done",
+      "native": "done"
+    },
+    {
+      "id": "palette-suggested",
+      "title": "Palette: suggestions for the screen you are on",
+      "web": "done",
+      "native": "done"
+    },
+    {
+      "id": "shortcut-sheet-filter",
+      "title": "Shortcut sheet: filter box",
+      "web": "done",
+      "native": "done"
+    },
+    {
+      "id": "shortcut-sheet-custom-marks",
+      "title": "Shortcut sheet: your own keys marked",
+      "web": "done",
+      "native": "planned"
+    },
+    {
+      "id": "status-hints",
+      "title": "Status bar hints change with the screen",
+      "web": "done",
+      "native": "done"
+    },
+    {
+      "id": "open-path-from-terminal",
+      "title": "Ctrl+Click file:line in a terminal opens the file",
+      "web": "done",
+      "native": "done",
+      "note": "Native opens the file in the web editor (its Files view is read-only)"
+    },
+    {
+      "id": "file-editor",
+      "title": "Code editor: tabs, breadcrumb, git marks in the gutter",
+      "web": "done",
+      "native": "n/a",
+      "reason": "The native Files view is read-only on purpose; it has Edit in browser"
+    },
+    {
+      "id": "send-selection",
+      "title": "Send the editor selection to an agent (Alt+S)",
+      "web": "done",
+      "native": "n/a",
+      "reason": "Needs the editor"
+    },
+    {
+      "id": "agent-dock",
+      "title": "Agent terminal beside the editor",
+      "web": "done",
+      "native": "n/a",
+      "reason": "Needs the editor"
+    },
+    {
+      "id": "finished-banner",
+      "title": "Banner and Review pill when an agent is done",
+      "web": "done",
+      "native": "done"
+    },
+    {
+      "id": "quickfix",
+      "title": "Check errors: jump to file:line from failed checks",
+      "web": "done",
+      "native": "planned"
+    },
+    {
+      "id": "review-comments",
+      "title": "Review: line comments, hunks reviewed or rejected, send to agent",
+      "web": "done",
+      "native": "planned"
+    },
+    {
+      "id": "review-keys",
+      "title": "Review keys: F7 next hunk, A mark reviewed",
+      "web": "done",
+      "native": "planned"
+    }
+  ]
+}
