@@ -49,7 +49,7 @@
       "id": "shortcut-sheet-custom-marks",
       "title": "Shortcut sheet: your own keys marked",
       "web": "done",
-      "native": "planned"
+      "native": "done"
     },
     {
       "id": "status-hints",
@@ -68,22 +68,20 @@
       "id": "file-editor",
       "title": "Code editor: tabs, breadcrumb, git marks in the gutter",
       "web": "done",
-      "native": "n/a",
-      "reason": "The native Files view is read-only on purpose; it has Edit in browser"
+      "native": "done"
     },
     {
       "id": "send-selection",
       "title": "Send the editor selection to an agent (Alt+S)",
       "web": "done",
-      "native": "n/a",
-      "reason": "Needs the editor"
+      "native": "done"
     },
     {
       "id": "agent-dock",
       "title": "Agent terminal beside the editor",
       "web": "done",
-      "native": "n/a",
-      "reason": "Needs the editor"
+      "native": "done",
+      "note": "native: the Files panel sits beside the agent terminal; Ctrl+J widens the editor"
     },
     {
       "id": "finished-banner",
@@ -95,19 +93,19 @@
       "id": "quickfix",
       "title": "Check errors: jump to file:line from failed checks",
       "web": "done",
-      "native": "planned"
+      "native": "done"
     },
     {
       "id": "review-comments",
       "title": "Review: line comments, hunks reviewed or rejected, send to agent",
       "web": "done",
-      "native": "planned"
+      "native": "done"
     },
     {
       "id": "review-keys",
       "title": "Review keys: F7 next hunk, A mark reviewed",
       "web": "done",
-      "native": "planned"
+      "native": "done"
     }
   ]
 }
