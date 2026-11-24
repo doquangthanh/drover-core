@@ -2,10 +2,13 @@
 
 pub mod agent_input;
 pub mod chat;
+pub mod checks;
 pub mod files_git;
 pub mod layout;
 pub mod machines;
 pub mod panes;
+pub mod review;
+pub mod review_comments;
 pub mod subagents;
 pub mod system;
 pub mod wait_children;
@@ -21,7 +24,7 @@ use crate::manager::Manager;
 use crate::rpc::{E_BAD_PARAMS, E_NO_METHOD, E_NOT_FOUND, MethodSpec, RpcError, RpcResult};
 
 static TABLE: LazyLock<HashMap<&'static str, MethodSpec>> = LazyLock::new(|| {
-    [system::methods(), workspace::methods(), panes::methods(), layout::methods(), agent_input::methods(), files_git::methods(), subagents::methods(), chat::methods(), machines::methods(), wait_children::methods()]
+    [system::methods(), workspace::methods(), panes::methods(), layout::methods(), agent_input::methods(), files_git::methods(), subagents::methods(), chat::methods(), machines::methods(), wait_children::methods(), checks::methods(), review::methods()]
         .into_iter()
         .flatten()
         .map(|m| (m.name, m))

@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+### Added
+- Daemon RPC methods the web client already called (they silently did nothing before). Post-run checks: `check.config`,
+  `check.run`, `check.list`, `check.cancel`, a `check` event and a `checks` map in the state. Steps come from
+  `.drover/checks.toml` in the repo and run only on `check.run`. Review loop: `review.diff`, `review.list`,
+  `review.comment.add|edit|resolve|delete`, `review.hunk.accept|reject`, `review.summary`, `review.send`. Review data is
+  kept in `<git-common-dir>/drover/review.json`, so nothing is committed.
+### Fixed
+- After a computer or daemon restart, the previous panes start again on their own (agents with their resume command,
+  shells as new shells in their folder). The native window never offered to resume, so its panes stayed stopped.
+  Turn off with `[session] resume_on_start = false` (the web UI then asks, as before).
+- Windows: a Claude pane started directly (`cmd /c claude.cmd`, npm install) now records its own conversation
+  (`claude --resume <id>`); it fell back to `claude --continue`, so several Claude panes in one folder lost theirs.
+
 ## 0.2.20
 The web UI and the native window look and work alike. drover-web and drover-desktop are tagged v0.2.20 too.
 ### Added
@@ -48,14 +62,6 @@ Windows fixes for the native window, and a one-line install. drover-web and drov
 - Website: the Download button points to the newest release that has `drover.exe`. Between tagging a release and
   attaching its bundle, `releases/latest/download/drover.exe` returned 404. The page also shows the VS Code keys the
   app uses instead of the old Ctrl+A prefix.
-
-## Unreleased
-### Fixed
-- After a computer or daemon restart, the previous panes start again on their own (agents with their resume command,
-  shells as new shells in their folder). The native window never offered to resume, so its panes stayed stopped.
-  Turn off with `[session] resume_on_start = false` (the web UI then asks, as before).
-- Windows: a Claude pane started directly (`cmd /c claude.cmd`, npm install) now records its own conversation
-  (`claude --resume <id>`); it fell back to `claude --continue`, so several Claude panes in one folder lost theirs.
 
 ## 0.2.6
 ### Fixed

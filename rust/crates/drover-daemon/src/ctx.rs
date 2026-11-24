@@ -36,6 +36,8 @@ pub struct Ctx {
     /// Per pane: keeps one prompt's paste and Enter together / serialises viewport-scrolling reads.
     pub input_locks: PaneLocks,
     pub read_locks: PaneLocks,
+    /// Latest post-run check result per folder.
+    pub checks: Arc<crate::checks::CheckStore>,
 }
 
 #[derive(Default)]
@@ -88,6 +90,7 @@ impl Ctx {
         let pending: Vec<Value> = self.pending_answers.lock().unwrap().iter()
             .map(|(k, (target, text, source))| json!({"id": k, "target": target, "text": text.trim(), "source": source}))
             .collect();
+        obj.insert("checks".into(), self.checks.snapshot());
         obj.insert("policy_pending".into(), json!(pending));
         state
     }
