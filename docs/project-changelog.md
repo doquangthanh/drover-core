@@ -1,7 +1,15 @@
 # Changelog
 
-## Unreleased
+## 0.2.21
+The native window gets the IDE side of the web UI. drover-web and drover-desktop are tagged v0.2.21 too.
 ### Added
+- Native: a code editor in the Files panel: tabs, breadcrumb, typing with undo / redo, selection, clipboard and the
+  input method, syntax colours, git marks in the gutter, Ctrl+S saves (a file an agent changed meanwhile is not
+  overwritten unless you say so). Alt+S sends the selection to an agent, Ctrl+J widens the editor beside the agent,
+  Ctrl+Click on `file:line` in a terminal opens it there.
+- Native: Changes has the checks strip (run, stop, each step's output), the review bar and the review diff (comment on a
+  line, mark a hunk reviewed or reject it, send the comments to the agent; F7 / Shift+F7 / A). "Check errors" in the
+  command palette jumps to the `file:line` of failed checks. The shortcut sheet lists your own keys from keys.toml.
 - Daemon RPC methods the web client already called (they silently did nothing before). Post-run checks: `check.config`,
   `check.run`, `check.list`, `check.cancel`, a `check` event and a `checks` map in the state. Steps come from
   `.drover/checks.toml` in the repo and run only on `check.run`. Review loop: `review.diff`, `review.list`,
