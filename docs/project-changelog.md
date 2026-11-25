@@ -1,6 +1,9 @@
 # Changelog
 
 ## Unreleased
+### Added
+- Native: Ctrl+P also finds text in terminals' scrollback (Enter opens Find there), "New agent here" on a machine, an
+  "Attach a picture" button in Chat. Fixed: the Checks strip showed in every folder; now only where checks are set up.
 
 ## 0.2.23
 The native window gets closer to the web UI: Files and Changes buttons, New agent dialog, stopped panes, file badges. drover-web and drover-desktop are tagged v0.2.23 too.

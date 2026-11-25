@@ -180,6 +180,38 @@
       "title": "New agent dialog: machine choice, folder browser, split or background placement, show as Chat",
       "web": "done",
       "native": "planned"
+    },
+    {
+      "id": "jump-scrollback-search",
+      "title": "Ctrl+P finds text in terminals' scrollback",
+      "web": "done",
+      "native": "done",
+      "note": "native lists the matching lines under the agents; Enter opens Find there. No live preview pane yet (web shows 24 lines of the terminal)"
+    },
+    {
+      "id": "checks-strip-when-configured",
+      "title": "Checks strip only where the folder has checks",
+      "web": "done",
+      "native": "done"
+    },
+    {
+      "id": "machine-new-agent",
+      "title": "Machines: New agent here",
+      "web": "done",
+      "native": "done"
+    },
+    {
+      "id": "chat-attach-picture",
+      "title": "Chat: Attach a picture button",
+      "web": "done",
+      "native": "done",
+      "note": "native also takes Ctrl+V"
+    },
+    {
+      "id": "jump-preview",
+      "title": "Ctrl+P: live preview of the selected terminal",
+      "web": "done",
+      "native": "planned"
     }
   ]
 }
