@@ -81,7 +81,7 @@
       "title": "Agent terminal beside the editor",
       "web": "done",
       "native": "done",
-      "note": "native: the Files panel sits beside the agent terminal; Ctrl+J widens the editor"
+      "note": "native: Files opens as the web does, tree | editor | the agent on the right; Ctrl+J narrows it to a column beside the terminals"
     },
     {
       "id": "finished-banner",
@@ -244,6 +244,13 @@
       "title": "Editor: several cursors, code folding",
       "web": "done",
       "native": "planned"
+    },
+    {
+      "id": "files-changes-layout",
+      "title": "Files: tree | editor | agent; Changes: worktrees | diff, as full views",
+      "web": "done",
+      "native": "done",
+      "note": "native: Changes hides the terminals while open, as the web view does"
     }
   ]
 }
