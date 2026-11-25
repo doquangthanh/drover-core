@@ -16,9 +16,9 @@
     {
       "id": "layout-constants",
       "title": "Sidebar width, top bar and status bar heights come from tokens.json",
-      "web": "planned",
+      "web": "done",
       "native": "done",
-      "note": "web still has the numbers in its CSS (sidebar.css); the generator writes no layout values for web yet"
+      "note": "web reads --sidebar-width, --topbar-height, --status-height, --pane-radius and --pane-padding from themes.generated.css (phone and tablet layouts keep their own sizes)"
     },
     {
       "id": "custom-keys",
@@ -62,7 +62,7 @@
       "title": "Ctrl+Click file:line in a terminal opens the file",
       "web": "done",
       "native": "done",
-      "note": "Native opens the file in the web editor (its Files view is read-only)"
+      "note": "Native opens it in its own Files editor; a file outside the pane's folder opens in the web UI"
     },
     {
       "id": "file-editor",
@@ -106,6 +106,27 @@
       "title": "Review keys: F7 next hunk, A mark reviewed",
       "web": "done",
       "native": "done"
+    },
+    {
+      "id": "chat-view",
+      "title": "Chat view: talk to Claude, model picker, permission cards, composer",
+      "web": "done",
+      "native": "done",
+      "note": "native: list (right-click: rename, delete), transcript with tool and permission cards, bold and code inline, Stop, model and mode menus, / and @ suggestions (arrows, Tab, Enter or click), pictures with Ctrl+V. Chats run on this computer only (chat.create has no machine)"
+    },
+    {
+      "id": "broadcast",
+      "title": "Broadcast dialog: send one message to several agents",
+      "web": "done",
+      "native": "done",
+      "note": "native: palette command \"Send to several agents\" (keys.toml id: broadcast)"
+    },
+    {
+      "id": "folder-picker",
+      "title": "In-app folder picker for a new space",
+      "web": "done",
+      "native": "done",
+      "note": "native: palette \"Open a folder as a new space\" and the + menu; machine menu, filter, New folder"
     }
   ]
 }

@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+### Added
+- Native window (drover-desktop): Chat view (list of chats with rename and delete, transcript with tool and permission
+  cards, bold and code inline, message box with Stop, model and mode menus, `/` and `@` suggestions, pictures with
+  Ctrl+V), "Send to several agents" (Broadcast) and a folder picker with a machine menu and New folder.
+- Web: sidebar width, tab bar and status bar height and pane radius and padding now come from `design/tokens.json`
+  (`--sidebar-width` and friends in `themes.generated.css`), as in the native window. `check-parity.mjs --strict`: no gaps.
+
 ## 0.2.21
 The native window gets the IDE side of the web UI. drover-web and drover-desktop are tagged v0.2.21 too.
 ### Added
