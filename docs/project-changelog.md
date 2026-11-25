@@ -5,6 +5,11 @@
 - Native: Ctrl+P also finds text in terminals' scrollback (Enter opens Find there), "New agent here" on a machine, an
   "Attach a picture" button in Chat. Fixed: the Checks strip showed in every folder; now only where checks are set up.
 
+## 0.2.24
+The native Files view gets an agent dock with a picker over all spaces, and Changes shows the file list beside the diff, as the web UI. drover-web and drover-desktop are tagged v0.2.24 too.
+### Changed
+- Native Files: tree, editor and agent as separate cards; tabs only with two or more files; the tree follows the folder of the agent picked in the dock. Native Changes: commit message and new task worktree asked in the picker. Confirmation toasts are short and do not stack.
+
 ## 0.2.23
 The native window gets closer to the web UI: Files and Changes buttons, New agent dialog, stopped panes, file badges. drover-web and drover-desktop are tagged v0.2.23 too.
 ### Added
