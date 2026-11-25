@@ -81,7 +81,7 @@
       "title": "Agent terminal beside the editor",
       "web": "done",
       "native": "done",
-      "note": "native: the Files panel sits beside the agent terminal; Ctrl+J widens the editor"
+      "note": "native: Files opens as the web does, tree | editor | the agent on the right; Ctrl+J narrows it to a column beside the terminals"
     },
     {
       "id": "finished-banner",
@@ -149,10 +149,10 @@
     },
     {
       "id": "file-icons",
-      "title": "File icons by type (Badges set)",
+      "title": "File icons by type and folder name (Material set)",
       "web": "done",
       "native": "done",
-      "note": "native draws the Badges set (coloured labels: RS, PY, TSX…)"
+      "note": "native embeds the Material Icon Theme set (colour per type and folder name), as the web default"
     },
     {
       "id": "new-agent-dialog",
@@ -170,16 +170,87 @@
     },
     {
       "id": "file-icon-sets",
-      "title": "File icon sets Material and Line, chosen in Settings",
+      "title": "Other icon sets (Badges, Line, None), chosen in Settings",
       "web": "done",
       "native": "planned",
-      "note": "native has only the Badges set"
+      "note": "native draws the Material set only, no choice in Settings"
     },
     {
       "id": "new-agent-options",
       "title": "New agent dialog: machine choice, folder browser, split or background placement, show as Chat",
       "web": "done",
       "native": "planned"
+    },
+    {
+      "id": "jump-scrollback-search",
+      "title": "Ctrl+P finds text in terminals' scrollback",
+      "web": "done",
+      "native": "done",
+      "note": "native lists the matching lines under the agents; Enter opens Find there. No live preview pane yet (web shows 24 lines of the terminal)"
+    },
+    {
+      "id": "checks-strip-when-configured",
+      "title": "Checks strip only where the folder has checks",
+      "web": "done",
+      "native": "done"
+    },
+    {
+      "id": "machine-new-agent",
+      "title": "Machines: New agent here",
+      "web": "done",
+      "native": "done"
+    },
+    {
+      "id": "chat-attach-picture",
+      "title": "Chat: Attach a picture button",
+      "web": "done",
+      "native": "done",
+      "note": "native also takes Ctrl+V"
+    },
+    {
+      "id": "jump-preview",
+      "title": "Ctrl+P: live preview of the selected terminal",
+      "web": "done",
+      "native": "planned"
+    },
+    {
+      "id": "editor-find",
+      "title": "Editor: Ctrl+F find in file, Ctrl+G go to line",
+      "web": "done",
+      "native": "done",
+      "note": "native: a box at the top, Enter = next match"
+    },
+    {
+      "id": "editor-line-commands",
+      "title": "Editor: Ctrl+/ comment, Alt+Up/Down move lines, duplicate and delete lines",
+      "web": "done",
+      "native": "done",
+      "note": "native: Ctrl+Shift+D duplicate, Ctrl+Shift+K delete line"
+    },
+    {
+      "id": "editor-replace",
+      "title": "Editor: find and replace",
+      "web": "done",
+      "native": "planned"
+    },
+    {
+      "id": "editor-auto-close",
+      "title": "Editor: auto-close brackets and quotes, matching bracket",
+      "web": "done",
+      "native": "planned"
+    },
+    {
+      "id": "editor-multi-cursor",
+      "title": "Editor: several cursors, code folding",
+      "web": "done",
+      "native": "planned"
+    },
+    {
+      "id": "files-changes-layout",
+      "title": "Files: tree | editor | agent; Changes: worktrees | diff, as full views",
+      "web": "done",
+      "native": "done",
+      "note": "native: Changes hides the terminals while open, as the web view does"
     }
   ]
 }
