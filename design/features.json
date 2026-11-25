@@ -149,10 +149,10 @@
     },
     {
       "id": "file-icons",
-      "title": "File icons by type (Badges set)",
+      "title": "File icons by type and folder name (Material set)",
       "web": "done",
       "native": "done",
-      "note": "native draws the Badges set (coloured labels: RS, PY, TSX…)"
+      "note": "native embeds the Material Icon Theme set (colour per type and folder name), as the web default"
     },
     {
       "id": "new-agent-dialog",
@@ -170,10 +170,10 @@
     },
     {
       "id": "file-icon-sets",
-      "title": "File icon sets Material and Line, chosen in Settings",
+      "title": "Other icon sets (Badges, Line, None), chosen in Settings",
       "web": "done",
       "native": "planned",
-      "note": "native has only the Badges set"
+      "note": "native draws the Material set only, no choice in Settings"
     },
     {
       "id": "new-agent-options",
