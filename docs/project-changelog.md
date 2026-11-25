@@ -1,6 +1,10 @@
 # Changelog
 
 ## Unreleased
+### Added
+- Native Files: + New file and ↻ Reload buttons, middle click closes a tab, a click on an untracked folder in the Changed
+  list opens the tree down to it. Native Changes: "Agent here" on a worktree. Parity table lists what is still missing
+  (file icons by type, New agent dialog, stopped panes).
 
 ## 0.2.22
 The native window gets the Chat view, Broadcast and the folder picker. drover-web and drover-desktop are tagged v0.2.22 too.

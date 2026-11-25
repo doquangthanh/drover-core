@@ -127,6 +127,46 @@
       "web": "done",
       "native": "done",
       "note": "native: palette \"Open a folder as a new space\" and the + menu; machine menu, filter, New folder"
+    },
+    {
+      "id": "files-new-file-reload",
+      "title": "Files: + New file and ↻ Reload buttons, open a folder from the Changed list",
+      "web": "done",
+      "native": "done"
+    },
+    {
+      "id": "files-tab-middle-close",
+      "title": "Files: middle click closes a tab",
+      "web": "done",
+      "native": "done"
+    },
+    {
+      "id": "changes-agent-here",
+      "title": "Changes: start an agent in a worktree (Agent here)",
+      "web": "done",
+      "native": "done",
+      "note": "native: a menu of the installed agents (web opens its New agent dialog)"
+    },
+    {
+      "id": "file-icons",
+      "title": "File icons by type, icon set chosen in Settings",
+      "web": "done",
+      "native": "planned",
+      "note": "native shows one folder icon only"
+    },
+    {
+      "id": "new-agent-dialog",
+      "title": "New agent dialog: name, folder, first prompt, arguments",
+      "web": "done",
+      "native": "planned",
+      "note": "native has the + menu only"
+    },
+    {
+      "id": "stopped-pane",
+      "title": "Pane stopped by a restart: Resume / Start fresh / Close",
+      "web": "done",
+      "native": "planned",
+      "note": "not found in native code; check how a stopped pane shows there"
     }
   ]
 }
