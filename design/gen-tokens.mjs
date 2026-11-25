@@ -88,6 +88,9 @@ const rustF32 = (v) => (Number.isInteger(v) ? v + ".0" : String(v));
 // ---- web: CSS custom properties ----
 function css() {
   const out = [`/* ${HEADER} */`];
+  // Sizes both clients use: sidebarWidth -> --sidebar-width, in px (strings are skipped: the font is not a size).
+  const sizes = Object.entries(tokens.layout ?? {}).filter(([, v]) => typeof v === "number").map(([k, v]) => `  --${kebab(k)}: ${v}px;`);
+  if (sizes.length) out.push(`:root {\n${sizes.join("\n")}\n}`);
   for (const t of tokens.themes) {
     const sel = t.id === "dark" ? ':root, :root[data-theme="dark"]' : `:root[data-theme="${t.id}"]`;
     const lines = [];
