@@ -1,6 +1,9 @@
 # Changelog
 
 ## Unreleased
+
+## 0.2.22
+The native window gets the Chat view, Broadcast and the folder picker. drover-web and drover-desktop are tagged v0.2.22 too.
 ### Added
 - Native window (drover-desktop): Chat view (list of chats with rename and delete, transcript with tool and permission
   cards, bold and code inline, message box with Stop, model and mode menus, `/` and `@` suggestions, pictures with
