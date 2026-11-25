@@ -212,6 +212,38 @@
       "title": "Ctrl+P: live preview of the selected terminal",
       "web": "done",
       "native": "planned"
+    },
+    {
+      "id": "editor-find",
+      "title": "Editor: Ctrl+F find in file, Ctrl+G go to line",
+      "web": "done",
+      "native": "done",
+      "note": "native: a box at the top, Enter = next match"
+    },
+    {
+      "id": "editor-line-commands",
+      "title": "Editor: Ctrl+/ comment, Alt+Up/Down move lines, duplicate and delete lines",
+      "web": "done",
+      "native": "done",
+      "note": "native: Ctrl+Shift+D duplicate, Ctrl+Shift+K delete line"
+    },
+    {
+      "id": "editor-replace",
+      "title": "Editor: find and replace",
+      "web": "done",
+      "native": "planned"
+    },
+    {
+      "id": "editor-auto-close",
+      "title": "Editor: auto-close brackets and quotes, matching bracket",
+      "web": "done",
+      "native": "planned"
+    },
+    {
+      "id": "editor-multi-cursor",
+      "title": "Editor: several cursors, code folding",
+      "web": "done",
+      "native": "planned"
     }
   ]
 }
